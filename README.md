@@ -14,11 +14,10 @@ O caixa utiliza notas de R$ 100,00, R$ 50,00, R$ 20,00 e R$ 10,00. O valor de sa
 ## Como executar?
 
 1. Clone o repositório:
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone https://github.com/Bianca-Ribeiro-0/Desafio-TSC.git
 
 2. Navegue até a pasta do projeto:
-cd seu-repositorio
-
+cd Desafio-Ts
 
 3. Instale as dependências:
 npm install
