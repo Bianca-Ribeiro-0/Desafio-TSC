@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caixa eletrônico</title>
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    <header>
+        <h1>Caixa Eletrônico</h1>
+    </header>
+    <body>
+       <div class="container">
+        <section>
+            <h2>Olá,</h2> <br />
+            <p>Quanto você gostaria de sacar?</p>
+            <form id="form-saque">
+                <input type="number" autocomplete="off" name="number" class="input" id="valor-saque" required placeholder="R$:" />
+                <button class="btn-sacar">Sacar</button>
+            </form>
+        </section>
+    <section id="notas-sacadas" class="notas"> 
+        <ul id="lista-notas-sacadas">
+            <li></li>
+        </ul>
+    </section>
+     </div>
+<script src="src/main.js"></script>    
+</body>
+</html>
