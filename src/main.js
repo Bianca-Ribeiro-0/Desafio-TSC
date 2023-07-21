@@ -1,23 +1,43 @@
 "use strict";
+//iniciando o DOM e adicionando eventos ao botao submit
+document.addEventListener('DOMContentLoaded', () => {
+    const caixaEletronico = new ATM();
+    const formSaque = document.getElementById('form-saque');
+    formSaque.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const valorSaqueInput = document.getElementById('valor-saque');
+        const valorSaque = Number(valorSaqueInput.value);
+        caixaEletronico.realizarSaque(valorSaque);
+    });
+});
+//classe de notas disponíveis no caixa Eletronico
 class ATM {
     constructor() {
         this.notasDisponiveis = {
-            100: 10,
-            50: 10,
-            20: 10,
-            10: 10,
+            100: 40,
+            50: 40,
+            20: 40,
+            10: 40,
         };
     }
+    //funcao para realizar o saque de acordo com as restricoes pré-estabelecidas
     realizarSaque(valorSaque) {
-        // Verificar limites de horário
         const horarioAtual = new Date().getHours();
         const limiteSaque = horarioAtual >= 6 && horarioAtual <= 21 ? 10000 : 1000;
+        //restricao de saque - horario
         if (valorSaque < 10 || valorSaque > limiteSaque) {
-            const mensagem = "Valor de saque inválido! O valor do saque deve estar entre R$ 10,00 e R$ " +
+            const mensagemErro = "Valor de saque inválido! O valor do saque deve estar entre R$ 10,00 e R$ " +
                 limiteSaque.toLocaleString();
-            alert(mensagem);
+            alert(mensagemErro);
         }
-        // Lógica para calcular a quantidade de notas
+        else { }
+        //restrição de saque - divisor de 10
+        if (valorSaque % 10 !== 0) {
+            const mensagemDiv = "Valor de saque deve ser divisível por 10";
+            alert(mensagemDiv);
+        }
+        else { }
+        // calculando a quantidade de notas necessarias 
         const notas = Object.keys(this.notasDisponiveis)
             .sort((a, b) => Number(b) - Number(a))
             .map(Number);
@@ -30,27 +50,16 @@ class ATM {
                 this.notasDisponiveis[nota] -= quantidadeNotas;
             }
         }
-        // Atualizar o DOM
+        // atualizando o DOM com as notas utilizadas
         const ulNotasSacadas = document.getElementById('lista-notas-sacadas');
         if (ulNotasSacadas !== null) {
             ulNotasSacadas.innerHTML = '';
             for (const nota in notasNecessarias) {
                 const quantidade = notasNecessarias[nota];
                 const liNota = document.createElement('li');
-                liNota.textContent = `Nota de R$ ${nota}, quantidade: ${quantidade}`;
+                liNota.textContent = `Nota de R$ ${nota},00 - quantidade: ${quantidade}x`;
                 ulNotasSacadas.appendChild(liNota);
             }
         }
     }
 }
-// Exemplo de uso
-document.addEventListener('DOMContentLoaded', () => {
-    const caixaEletronico = new ATM();
-    const formSaque = document.getElementById('form-saque');
-    formSaque.addEventListener('submit', (event) => {
-        event.preventDefault();
-        const valorSaqueInput = document.getElementById('valor-saque');
-        const valorSaque = Number(valorSaqueInput.value);
-        caixaEletronico.realizarSaque(valorSaque);
-    });
-});

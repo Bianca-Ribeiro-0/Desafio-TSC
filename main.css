@@ -36,6 +36,7 @@ h2 {
     font-size: 1.8em;
     margin-left: 104px;
     margin-bottom: 1em;
+    color: #a7ce2e;
 }
 
 p {
@@ -89,4 +90,9 @@ button {
 .container-saque { 
     max-width: 960px;
     width: 100%;
+}
+
+#lista-notas-sacadas{
+    padding-top: 25px;
+    text-align: center;
 }
