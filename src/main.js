@@ -14,10 +14,10 @@ document.addEventListener('DOMContentLoaded', () => {
 class ATM {
     constructor() {
         this.notasDisponiveis = {
-            100: 40,
-            50: 40,
-            20: 40,
-            10: 40,
+            100: 100,
+            50: 100,
+            20: 100,
+            10: 100,
         };
     }
     //funcao para realizar o saque de acordo com as restricoes pré-estabelecidas
@@ -57,7 +57,7 @@ class ATM {
             for (const nota in notasNecessarias) {
                 const quantidade = notasNecessarias[nota];
                 const liNota = document.createElement('li');
-                liNota.textContent = `Nota de R$ ${nota},00 - quantidade: ${quantidade}x`;
+                liNota.textContent = `${quantidade}x - RS$${nota},00`;
                 ulNotasSacadas.appendChild(liNota);
             }
         }
