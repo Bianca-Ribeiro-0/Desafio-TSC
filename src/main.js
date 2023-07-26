@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const valorSaqueInput = document.getElementById('valor-saque');
         const valorSaque = Number(valorSaqueInput.value);
         caixaEletronico.realizarSaque(valorSaque);
+        valorSaqueInput.value = '';
     });
 });
 //classe de notas disponíveis no caixa Eletronico
@@ -30,13 +31,11 @@ class ATM {
                 limiteSaque.toLocaleString();
             alert(mensagemErro);
         }
-        else { }
         //restrição de saque - divisor de 10
         if (valorSaque % 10 !== 0) {
             const mensagemDiv = "Valor de saque deve ser divisível por 10";
             alert(mensagemDiv);
         }
-        else { }
         // calculando a quantidade de notas necessarias 
         const notas = Object.keys(this.notasDisponiveis)
             .sort((a, b) => Number(b) - Number(a))
@@ -51,14 +50,14 @@ class ATM {
             }
         }
         // atualizando o DOM com as notas utilizadas
-        const ulNotasSacadas = document.getElementById('lista-notas-sacadas');
-        if (ulNotasSacadas !== null) {
-            ulNotasSacadas.innerHTML = '';
+        const listaNotasSacadas = document.getElementById('lista-notas-sacadas');
+        if (listaNotasSacadas !== null) {
+            listaNotasSacadas.innerHTML = '';
             for (const nota in notasNecessarias) {
                 const quantidade = notasNecessarias[nota];
                 const liNota = document.createElement('li');
                 liNota.textContent = `${quantidade}x - RS$${nota},00`;
-                ulNotasSacadas.appendChild(liNota);
+                listaNotasSacadas.appendChild(liNota);
             }
         }
     }
