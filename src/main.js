@@ -1,5 +1,4 @@
 "use strict";
-//iniciando o DOM e adicionando eventos ao botao submit
 document.addEventListener('DOMContentLoaded', () => {
     const caixaEletronico = new ATM();
     const formSaque = document.getElementById('form-saque');
@@ -11,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
         valorSaqueInput.value = '';
     });
 });
-//classe de notas disponíveis no caixa Eletronico
 class ATM {
     constructor() {
         this.notasDisponiveis = {
@@ -21,22 +19,23 @@ class ATM {
             10: 100,
         };
     }
-    //funcao para realizar o saque de acordo com as restricoes pré-estabelecidas
-    realizarSaque(valorSaque) {
+    verificarRestricoes(valorSaque) {
         const horarioAtual = new Date().getHours();
         const limiteSaque = horarioAtual >= 6 && horarioAtual <= 21 ? 10000 : 1000;
-        //restricao de saque - horario
         if (valorSaque < 10 || valorSaque > limiteSaque) {
             const mensagemErro = "Valor de saque inválido! O valor do saque deve estar entre R$ 10,00 e R$ " +
                 limiteSaque.toLocaleString();
             alert(mensagemErro);
+            return false;
         }
-        //restrição de saque - divisor de 10
         if (valorSaque % 10 !== 0) {
             const mensagemDiv = "Valor de saque deve ser divisível por 10";
             alert(mensagemDiv);
+            return false;
         }
-        // calculando a quantidade de notas necessarias 
+        return true;
+    }
+    calcularNotasNecessarias(valorSaque) {
         const notas = Object.keys(this.notasDisponiveis)
             .sort((a, b) => Number(b) - Number(a))
             .map(Number);
@@ -49,7 +48,9 @@ class ATM {
                 this.notasDisponiveis[nota] -= quantidadeNotas;
             }
         }
-        // atualizando o DOM com as notas utilizadas
+        return notasNecessarias;
+    }
+    atualizarDOM(notasNecessarias) {
         const listaNotasSacadas = document.getElementById('lista-notas-sacadas');
         if (listaNotasSacadas !== null) {
             listaNotasSacadas.innerHTML = '';
@@ -60,5 +61,12 @@ class ATM {
                 listaNotasSacadas.appendChild(liNota);
             }
         }
+    }
+    realizarSaque(valorSaque) {
+        if (!this.verificarRestricoes(valorSaque)) {
+            return;
+        }
+        const notasNecessarias = this.calcularNotasNecessarias(valorSaque);
+        this.atualizarDOM(notasNecessarias);
     }
 }
